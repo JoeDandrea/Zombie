@@ -96,18 +96,19 @@ public class Zombie extends Actor
     
     public void checkWorld()
     {
-        if(isAtEdge())
-        {
-           if(this.getX() == getWorld().getWidth())
-           {
-           getWorld().addObject(this,0,this.getY());
-           getWorld().removeObject(this);
+        if(isAtEdge()){
+           if(this.getX() >= getWorld().getWidth()-1){
+               this.setLocation( 0 , this.getY() );
            }
-            if(this.getY() == getWorld().getHeight())
-           {
-           getWorld().addObject(this,this.getX(),0);
-           getWorld().removeObject(this);
+           else if(this.getX() <= 0 ){
+               this.setLocation( getWorld().getWidth() , this.getY());
+            }
+            if(this.getY() <= 0){
+               this.setLocation( this.getX() , getWorld().getHeight());
            }
+           else if (this.getY() >= getWorld().getHeight()-1){
+               this.setLocation( this.getX() , 0 );
+            }
+        }
     }
-}
 }

@@ -39,6 +39,7 @@ public class Bullet extends Actor
            if(Zombie.lives <= 0){
              getWorld().showText("Lives:" + 0,60,15);
              getWorld().removeObject(zombie); 
+             Greenfoot.stop();
              }
        }
                  
