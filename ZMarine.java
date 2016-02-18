@@ -14,18 +14,14 @@ public class ZMarine extends Actor
      * Act - do whatever the Marine wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    double time =0;
+    
     public void act() 
     {
         move(1);
         turnAtEdge();
         randomTurn();
+        lookforMarines();
         
-        if (time % 60 ==0 )
-        {
-        getWorld().addObject(new Bullet(getRotation()), getX(), getY());    
-        }
-        time = time + 1;
     }    
     
     public void randomTurn()
@@ -45,5 +41,15 @@ public class ZMarine extends Actor
         }
     }
     
+    public void lookforMarines()
+    {
+        Marine marine = (Marine) getOneIntersectingObject(Marine.class);
+        ZMarine zmarine = new ZMarine();
+        if (marine != null) {       
+        removeTouching(Marine.class);
+        }
+        
+      
+    }
     
 }
