@@ -23,9 +23,7 @@ public class Marine extends Actor
         
         if (time % 60 ==0 )
         {
-            double x = getX() + 20*Math.cos(getRotation());
-            double y = getY() + 20*Math.sin(getRotation());
-        getWorld().addObject(new Bullet(getRotation()),(int)x ,(int)y );    
+          getWorld().addObject(new Bullet(getRotation()),getX() ,getY() );    
         }
         time = time + 1;
     }    
