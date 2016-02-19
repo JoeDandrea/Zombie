@@ -26,7 +26,7 @@ public class Bullet extends Actor
     {
        boolean deleteMe = false;
        Actor zombie = getOneIntersectingObject(Zombie.class);
-           
+       Actor zmarine = getOneIntersectingObject(ZMarine.class);
         if(isAtEdge())
         {  
          deleteMe = true; 
@@ -42,7 +42,13 @@ public class Bullet extends Actor
              Greenfoot.stop();
              }
        }
-                 
+           
+        if(zmarine != null) 
+           {
+           getWorld().removeObject(zmarine); 
+           deleteMe = true;
+         }
+       
        if (deleteMe == true){
           getWorld().removeObject(this);
         }

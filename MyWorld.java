@@ -21,12 +21,14 @@ public class MyWorld extends World
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(560, 560, 1); 
+        super(1100, 700, 1); 
         setPaintOrder(Zombie.class, Marine.class);
         prepare();
-        level();
-        
+              
   }
+   public void act(){
+        level();
+    }
    
   private void prepare()
     {
@@ -35,44 +37,49 @@ public class MyWorld extends World
         Zombie.lives = 3;
         
         Marine marine = new Marine();
-        addObject(marine,215,406);
+        addObject(marine,randomX(),randomY());
         
         Marine marine2 = new Marine();
-        addObject(marine2,115,406);
+        addObject(marine2,randomX(),randomY());
         
         Marine marine3 = new Marine();
-        addObject(marine3,175,3406);
+        addObject(marine3,randomX(),randomY());
         
         Marine marine4 = new Marine();
-        addObject(marine4,15,06);
+        addObject(marine4,randomX(),randomY());
         
         Marine marine5 = new Marine();
-        addObject(marine5,115,406);
+        addObject(marine5,randomX(),randomY());
         
         Marine marine6 = new Marine();
-        addObject(marine6,75,306);
+        addObject(marine6,randomX(),randomY());
     }
     
     private void level(){
         
-        if(getWorld().Marine == null){
-            Marine marine = new Marine();
-        addObject(marine,215,406);
-        
-        Marine marine2 = new Marine();
-        addObject(marine2,115,406);
-        
-        Marine marine3 = new Marine();
-        addObject(marine3,175,3406);
-        
-        Marine marine4 = new Marine();
-        addObject(marine4,15,06);
-        
-        Marine marine5 = new Marine();
-        addObject(marine5,115,406);
-        
-        Marine marine6 = new Marine();
-        addObject(marine6,75,306); 
+        if(getObjects(Marine.class).isEmpty()){
+        List remove = getObjects(ZMarine.class);
+          for (Object objects : remove){
+            removeObject((ZMarine) objects);
+          }
+        ++Zombie.level;
+          for (int l = 1; l <= Zombie.level *2; ++ l){
+          Marine marine = new Marine();
+           addObject(marine,randomX(),randomY());
+          }
     }
    }
+   
+   private int randomX(){
+   return( 10 +  (int)(Math.random()*(1091)));
+   // int Random = (min.value ) + (int)(Math.random()* ( Max - Min + 1));
+   // Where min is the smallest value You want to be the smallest number possible to      
+   // generate and Max is the biggest possible number to generate*/
+   
+}
+    
+    private int randomY(){
+      return( 10 +  (int)(Math.random()*(691)));
+    }
+    
 }

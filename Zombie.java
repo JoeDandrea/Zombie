@@ -16,6 +16,8 @@ public class Zombie extends Actor
 {
     private int marinesEaten;
     public static int lives = 3;
+    public static int level = 1;
+    
     boolean rFoot = false;
     double wTime = 0;  // Walking animation timer
     
@@ -89,9 +91,9 @@ public class Zombie extends Actor
         marinesEaten = marinesEaten + 1;
         Greenfoot.playSound("slurp.wav");
         }
-        getWorld().showText("Marines Eaten:" + marinesEaten,100,30);
+        getWorld().showText("Marines Eaten:" + marinesEaten,100,40);
         getWorld().showText("Lives:" + lives,60,15);
-      
+        getWorld().showText("Level:" + level,140,15);
     }
     
     public void checkWorld()
