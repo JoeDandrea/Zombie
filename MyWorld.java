@@ -59,9 +59,14 @@ public class MyWorld extends World
         
         if(getObjects(Marine.class).isEmpty()){
         List remove = getObjects(ZMarine.class);
+        List remove2 = getObjects(Dead.class);
           for (Object objects : remove){
             removeObject((ZMarine) objects);
           }
+          for (Object objects : remove2){
+            removeObject((Dead) objects);
+          }
+         
         ++Zombie.level;
           for (int l = 1; l <= Zombie.level *2; ++ l){
           Marine marine = new Marine();

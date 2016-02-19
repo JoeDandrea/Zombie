@@ -38,6 +38,7 @@ public class Bullet extends Actor
            deleteMe = true;
            if(Zombie.lives <= 0){
              getWorld().showText("Lives:" + 0,60,15);
+             Greenfoot.playSound("Pain.wav");
              getWorld().removeObject(zombie); 
              Greenfoot.stop();
              }
