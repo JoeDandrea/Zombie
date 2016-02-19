@@ -24,6 +24,7 @@ public class MyWorld extends World
         super(560, 560, 1); 
         setPaintOrder(Zombie.class, Marine.class);
         prepare();
+        level();
         
   }
    
@@ -51,4 +52,27 @@ public class MyWorld extends World
         Marine marine6 = new Marine();
         addObject(marine6,75,306);
     }
+    
+    private void level(){
+        
+        if(getWorld().Marine == null){
+            Marine marine = new Marine();
+        addObject(marine,215,406);
+        
+        Marine marine2 = new Marine();
+        addObject(marine2,115,406);
+        
+        Marine marine3 = new Marine();
+        addObject(marine3,175,3406);
+        
+        Marine marine4 = new Marine();
+        addObject(marine4,15,06);
+        
+        Marine marine5 = new Marine();
+        addObject(marine5,115,406);
+        
+        Marine marine6 = new Marine();
+        addObject(marine6,75,306); 
+    }
+   }
 }

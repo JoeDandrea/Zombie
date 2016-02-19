@@ -47,6 +47,7 @@ public class ZMarine extends Actor
         ZMarine zmarine = new ZMarine();
         if (marine != null) {       
         removeTouching(Marine.class);
+        Greenfoot.playSound("slurp.wav"); //https://freesound.org/people/Sirderf/sounds/333132/
         }
         
       
