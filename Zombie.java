@@ -30,6 +30,7 @@ public class Zombie extends Actor
     {
         checkKeyPress();
         lookforMarines();
+        lookforBoss();
         checkWorld();
         wTime = wTime + 1;
     }
@@ -96,6 +97,16 @@ public class Zombie extends Actor
         getWorld().showText("Marines Eaten:" + marinesEaten,100,40);
         getWorld().showText("Lives:" + lives,60,15);
         getWorld().showText("Level:" + level,140,15);
+    }
+     
+    public void lookforBoss()
+    {
+        Boss1 boss = (Boss1) getOneIntersectingObject(Boss1.class);
+        if (boss != null) {       
+          removeTouching(Boss1.class);
+          getWorld().addObject(boss,getX(),getY());
+         }
+       
     }
     
     public void checkWorld()

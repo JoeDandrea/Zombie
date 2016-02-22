@@ -24,10 +24,13 @@ public class MyWorld extends World
         super(1000, 600, 1); 
         setPaintOrder(Zombie.class, Marine.class);
         prepare();
+       
               
   }
    public void act(){
-        level();
+       spawn(); 
+       level();
+        
     }
    
   private void prepare()
@@ -57,7 +60,7 @@ public class MyWorld extends World
     
     private void level(){
         
-        if(getObjects(Marine.class).isEmpty()){
+        if(getObjects(Marine.class).isEmpty() && getObjects(Boss1.class).isEmpty()){
         List remove = getObjects(ZMarine.class);
         List remove2 = getObjects(Dead.class);
           for (Object objects : remove){
@@ -75,7 +78,7 @@ public class MyWorld extends World
     }
    }
    
-   private int randomX(){
+   public static int randomX(){
    return( 10 +  (int)(Math.random()*(1091)));
    // int Random = (min.value ) + (int)(Math.random()* ( Max - Min + 1));
    // Where min is the smallest value You want to be the smallest number possible to      
@@ -83,8 +86,30 @@ public class MyWorld extends World
    
 }
     
-    private int randomY(){
+    public static int randomY(){
       return( 10 +  (int)(Math.random()*(691)));
     }
     
+    
+    
+    public void spawn(){
+    if( Zombie.level == 2 && getObjects(Boss1.class).isEmpty())
+        if(getObjects(Marine.class).isEmpty()){
+        List remove = getObjects(ZMarine.class);
+        List remove2 = getObjects(Dead.class);
+          for (Object objects : remove){
+            removeObject((ZMarine) objects);
+          }
+          for (Object objects : remove2){
+           removeObject((Dead) objects);
+          }
+         
+          
+          Boss1 boss = new Boss1();
+          addObject(boss,MyWorld.randomX(),MyWorld.randomY());
+          ++Zombie.level;
+       
+    }
+    
+   }
 }
