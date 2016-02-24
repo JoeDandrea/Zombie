@@ -21,11 +21,17 @@ public class MyWorld extends World
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(560, 560, 1); 
+        super(1000, 600, 1); 
         setPaintOrder(Zombie.class, Marine.class);
         prepare();
-        
+       
+              
   }
+   public void act(){
+       spawn(); 
+       level();
+        
+    }
    
   private void prepare()
     {
@@ -34,21 +40,76 @@ public class MyWorld extends World
         Zombie.lives = 3;
         
         Marine marine = new Marine();
-        addObject(marine,215,406);
+        addObject(marine,randomX(),randomY());
         
         Marine marine2 = new Marine();
-        addObject(marine2,115,406);
+        addObject(marine2,randomX(),randomY());
         
         Marine marine3 = new Marine();
-        addObject(marine3,175,3406);
+        addObject(marine3,randomX(),randomY());
         
         Marine marine4 = new Marine();
-        addObject(marine4,15,06);
+        addObject(marine4,randomX(),randomY());
         
         Marine marine5 = new Marine();
-        addObject(marine5,115,406);
+        addObject(marine5,randomX(),randomY());
         
         Marine marine6 = new Marine();
-        addObject(marine6,75,306);
+        addObject(marine6,randomX(),randomY());
     }
+    
+    private void level(){
+        
+        if(getObjects(Marine.class).isEmpty() && getObjects(Boss1.class).isEmpty()){
+        List remove = getObjects(ZMarine.class);
+        List remove2 = getObjects(Dead.class);
+          for (Object objects : remove){
+            removeObject((ZMarine) objects);
+          }
+          for (Object objects : remove2){
+            removeObject((Dead) objects);
+          }
+         
+        ++Zombie.level;
+          for (int l = 1; l <= Zombie.level *2; ++ l){
+          Marine marine = new Marine();
+           addObject(marine,randomX(),randomY());
+          }
+    }
+   }
+   
+   public static int randomX(){
+   return( 10 +  (int)(Math.random()*(1091)));
+   // int Random = (min.value ) + (int)(Math.random()* ( Max - Min + 1));
+   // Where min is the smallest value You want to be the smallest number possible to      
+   // generate and Max is the biggest possible number to generate*/
+   
+}
+    
+    public static int randomY(){
+      return( 10 +  (int)(Math.random()*(691)));
+    }
+    
+    
+    
+    public void spawn(){
+    if( Zombie.level == 2 && getObjects(Boss1.class).isEmpty())
+        if(getObjects(Marine.class).isEmpty()){
+        List remove = getObjects(ZMarine.class);
+        List remove2 = getObjects(Dead.class);
+          for (Object objects : remove){
+            removeObject((ZMarine) objects);
+          }
+          for (Object objects : remove2){
+           removeObject((Dead) objects);
+          }
+         
+          
+          Boss1 boss = new Boss1();
+          addObject(boss,MyWorld.randomX(),MyWorld.randomY());
+          ++Zombie.level;
+       
+    }
+    
+   }
 }

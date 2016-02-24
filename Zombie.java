@@ -16,6 +16,8 @@ public class Zombie extends Actor
 {
     private int marinesEaten;
     public static int lives = 3;
+    public static int level = 1;
+    
     boolean rFoot = false;
     double wTime = 0;  // Walking animation timer
     
@@ -28,6 +30,7 @@ public class Zombie extends Actor
     {
         checkKeyPress();
         lookforMarines();
+        lookforBoss();
         checkWorld();
         wTime = wTime + 1;
     }
@@ -83,14 +86,17 @@ public class Zombie extends Actor
     {
         Marine marine = (Marine) getOneIntersectingObject(Marine.class);
         ZMarine zmarine = new ZMarine();
+        Dead dead = new Dead();
         if (marine != null) {       
         removeTouching(Marine.class);
         getWorld().addObject(zmarine,getX(),getY());
+        getWorld().addObject(dead,getX(),getY());
         marinesEaten = marinesEaten + 1;
         Greenfoot.playSound("slurp.wav");
         }
-        getWorld().showText("Marines Eaten:" + marinesEaten,100,30);
+        getWorld().showText("Marines Eaten:" + marinesEaten,100,40);
         getWorld().showText("Lives:" + lives,60,15);
+<<<<<<< HEAD
        
         Actor player;
         player = getOneObjectAtOffset(0, 0, Player.class);
@@ -104,6 +110,20 @@ public class Zombie extends Actor
             //world.addObject( zg1 ,x, y);
             
             world.removeObject(player);
+=======
+        getWorld().showText("Level:" + level,140,15);
+    }
+     
+    public void lookforBoss()
+    {
+        Boss1 boss = (Boss1) getOneIntersectingObject(Boss1.class);
+        if (boss != null) {       
+          removeTouching(Boss1.class);
+          getWorld().addObject(boss,getX(),getY());
+         }
+       
+    }
+>>>>>>> origin/master
     
         }
     }
