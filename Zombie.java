@@ -91,9 +91,22 @@ public class Zombie extends Actor
         }
         getWorld().showText("Marines Eaten:" + marinesEaten,100,30);
         getWorld().showText("Lives:" + lives,60,15);
-      
-    }
+       
+        Actor player;
+        player = getOneObjectAtOffset(0, 0, Player.class);
+        if(player != null){
+            int x = player.getX();
+            int y = player.getY();
+            World world;
+            world = getWorld();
+            //world.removeObject(zombie);
+            //ZombieGuts zg1 = new ZombieGuts();
+            //world.addObject( zg1 ,x, y);
+            
+            world.removeObject(player);
     
+        }
+    }
     public void checkWorld()
     {
         if(isAtEdge()){
