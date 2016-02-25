@@ -96,7 +96,7 @@ public class Zombie extends Actor
         }
         getWorld().showText("Marines Eaten:" + marinesEaten,100,40);
         getWorld().showText("Lives:" + lives,60,15);
-<<<<<<< HEAD
+
        
         Actor player;
         player = getOneObjectAtOffset(0, 0, Player.class);
@@ -110,23 +110,24 @@ public class Zombie extends Actor
             //world.addObject( zg1 ,x, y);
             
             world.removeObject(player);
-=======
+
         getWorld().showText("Level:" + level,140,15);
-    }
-     
-    public void lookforBoss()
-    {
+       }
+      }
+      
+      public void lookforBoss()
+      {
         Boss1 boss = (Boss1) getOneIntersectingObject(Boss1.class);
         if (boss != null) {       
           removeTouching(Boss1.class);
           getWorld().addObject(boss,getX(),getY());
          }
        
-    }
->>>>>>> origin/master
+       }
+
     
-        }
-    }
+        
+    
     public void checkWorld()
     {
         if(isAtEdge()){
