@@ -93,7 +93,16 @@ public class Zombie extends Actor
         getWorld().addObject(dead,getX(),getY());
         marinesEaten = marinesEaten + 1;
         Greenfoot.playSound("slurp.wav");
+        
+        Life life = new Life();
+        int x= (int) Math.ceil(Math.random()*100);
+        if(x <= 25){
+         getWorld().addObject(life,MyWorld.randomX(),MyWorld.randomY());
+         }
+         
+         
         }
+        
         getWorld().showText("Marines Eaten:" + marinesEaten,100,40);
         getWorld().showText("Lives:" + lives,60,15);
 
@@ -118,10 +127,9 @@ public class Zombie extends Actor
       public void lookforBoss()
       {
         Boss1 boss = (Boss1) getOneIntersectingObject(Boss1.class);
-        if (boss != null) {       
+         if (boss != null) {       
           removeTouching(Boss1.class);
-          getWorld().addObject(boss,getX(),getY());
-         }
+           }
        
        }
 

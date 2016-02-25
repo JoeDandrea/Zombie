@@ -18,8 +18,8 @@ public class Boss1 extends Actor{
         if (time % 60 ==0 )
         {
           getWorld().addObject(new Bullet(getRotation()),getX() ,getY() );    
-          getWorld().addObject(new Bullet(getRotation()+15),getX() ,getY() );    
-          getWorld().addObject(new Bullet(getRotation()-15),getX() ,getY() );    
+          getWorld().addObject(new Bullet(getRotation()+10),getX() ,getY() );    
+          getWorld().addObject(new Bullet(getRotation()-10),getX() ,getY() );    
         }
         time = time + 1;
     }    
