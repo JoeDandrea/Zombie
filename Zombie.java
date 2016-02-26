@@ -18,7 +18,9 @@ public class Zombie extends Actor
     public static int lives = 3;
     public static int level = 1;
     
-    boolean rFoot = false;
+    boolean rFoot = true;
+    boolean mFoot = true;
+    
     double wTime = 0;  // Walking animation timer
     
     public Zombie()  //Initializes Zombie
@@ -35,7 +37,7 @@ public class Zombie extends Actor
         wTime = wTime + 1;
     }
     
-    public void checkKeyPress()
+    public void checkKeyPress() //Basic Movement  Falling?
     {
         if (Greenfoot.isKeyDown("a"))
         {
@@ -48,17 +50,29 @@ public class Zombie extends Actor
         
         if (Greenfoot.isKeyDown("w"))
         {
-           if( rFoot == true && wTime % 15 == 0)
+           if(wTime % 15 == 0 && mFoot == true)
            {
-            this.setImage("zombie_walk1.png");
-            rFoot = false;
-           }
-           else if(wTime % 15 == 0){
-            this.setImage("zombie_walk2.png");
-            rFoot = true;
+            this.setImage("zombie_walk3.png");
+            
+            mFoot = false;
+            if (rFoot == false){
+                rFoot = true;
+                }
+            else if (rFoot == true){
+                rFoot = false;
             }
-            move(2);
+           }
+            else if (wTime % 15 == 0 && rFoot == true){
+            this.setImage("zombie_walk1.png");
+            mFoot = true;
+            }
+            else if (wTime % 15 == 0 && rFoot == false){
+                this.setImage("zombie_walk2.png");
+                mFoot = true;
+             }
+          move(2);
         } 
+        
         if (!Greenfoot.isKeyDown("w") && !Greenfoot.isKeyDown("s") )
         {     
            if( rFoot = true)
@@ -80,9 +94,15 @@ public class Zombie extends Actor
             }
            move(-2);
         } 
+        
+           if (Greenfoot.isKeyDown("space")) // need stamina bar
+        {
+           move(6);
+        } 
+        
     }
     
-    public void lookforMarines()
+    public void lookforMarines()  //Remove Marines and add to score
     {
         Marine marine = (Marine) getOneIntersectingObject(Marine.class);
         ZMarine zmarine = new ZMarine();
@@ -94,16 +114,16 @@ public class Zombie extends Actor
         marinesEaten = marinesEaten + 1;
         Greenfoot.playSound("slurp.wav");
         
-        Life life = new Life();
+        Life life = new Life(); //Extra Life Powerup
         int x= (int) Math.ceil(Math.random()*100);
-        if(x <= 25){
+        if(x <= 15){
          getWorld().addObject(life,MyWorld.randomX(),MyWorld.randomY());
          }
          
          
         }
         
-        getWorld().showText("Marines Eaten:" + marinesEaten,100,40);
+        getWorld().showText("Marines Eaten:" + marinesEaten,100,40); //Score
         getWorld().showText("Lives:" + lives,60,15);
         getWorld().showText("Level:" + level,140,15);
        
@@ -119,11 +139,11 @@ public class Zombie extends Actor
             
             getWorld().removeObject(player);
 
-        getWorld().showText("Level:" + level,140,15);
+        
        }
       }
       
-      public void lookforBoss()
+      public void lookforBoss() //Find and remove Bosses
       {
         Fzombie fzombie = (Fzombie) getOneIntersectingObject(Fzombie.class);
          if (fzombie != null) {       

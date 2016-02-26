@@ -14,18 +14,14 @@ public class Life extends Actor
      */
     public void act() 
     {
-       boolean deleteMe = false;
-       Actor zombie = getOneIntersectingObject(Zombie.class);
+        Actor zombie = getOneIntersectingObject(Zombie.class);
        
             if(zombie != null) 
             {
              ++Zombie.lives;
-             deleteMe = true;
+             getWorld().removeObject(this);
             }   
            
-            if (deleteMe == true)
-            {
-                getWorld().removeObject(this);
-            }   
+             
        }
     }

@@ -36,8 +36,9 @@ public class MyWorld extends World
   private void prepare()
     {
         Zombie zombie = new Zombie();
-        addObject(zombie,273,337);
+        addObject(zombie,getWidth()/2,getHeight()/2);
         Zombie.lives = 3;
+        Zombie.level = 1;
         
         Marine marine = new Marine();
         addObject(marine,randomX(),randomY());
