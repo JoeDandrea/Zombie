@@ -22,7 +22,7 @@ public class MyWorld extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1000, 600, 1); 
-        setPaintOrder(Zombie.class, Marine.class);
+        setPaintOrder(Zombie.class, Fzombie.class, Boss1.class, Marine.class, ZMarine.class, Life.class, Dead.class, Bullet.class );
         prepare();
        
               
@@ -51,11 +51,7 @@ public class MyWorld extends World
         Marine marine4 = new Marine();
         addObject(marine4,randomX(),randomY());
         
-        Marine marine5 = new Marine();
-        addObject(marine5,randomX(),randomY());
-        
-        Marine marine6 = new Marine();
-        addObject(marine6,randomX(),randomY());
+      
     }
     
     private void level(){

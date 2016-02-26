@@ -43,16 +43,16 @@ public class Fzombie extends Actor
         }
     }
     public void checkBounds(){
-        if(getX() >= 559){
+        if(getX() >= getWorld().getWidth()-10){
             turn(180);
         }
-        if(getY() >= 559){
+        else if(getY() >= getWorld().getHeight()-10){
             turn(180);
         }
-        if(getY() <= 1){
+        else if(getY() < 1){
             turn(180);
         }
-        if(getX() <= 1){
+        else if(getX() < 1){
             turn(180);
         }
     }
