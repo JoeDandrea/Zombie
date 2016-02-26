@@ -34,21 +34,22 @@ public class Zombie extends Actor
         lookforMarines();
         lookforBoss();
         checkWorld();
+        checkSpeed();
         wTime = wTime + 1;
     }
     
     public void checkKeyPress() //Basic Movement  Falling?
     {
-        if (Greenfoot.isKeyDown("a"))
+        if (Greenfoot.isKeyDown("a") || Greenfoot.isKeyDown("left"))
         {
             turn(-4);
         }
-        if (Greenfoot.isKeyDown("d"))
+        if (Greenfoot.isKeyDown("d") || Greenfoot.isKeyDown("right"))
         {
             turn(4);
         } 
         
-        if (Greenfoot.isKeyDown("w"))
+        if (Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("up"))
         {
            if(wTime % 15 == 0 && mFoot == true)
            {
@@ -70,10 +71,10 @@ public class Zombie extends Actor
                 this.setImage("zombie_walk2.png");
                 mFoot = true;
              }
-          move(2);
+          move(Speed.zSpeed);
         } 
         
-        if (!Greenfoot.isKeyDown("w") && !Greenfoot.isKeyDown("s") )
+        if (!Greenfoot.isKeyDown("w") && !Greenfoot.isKeyDown("s") && !Greenfoot.isKeyDown("up") && !Greenfoot.isKeyDown("down") )
         {     
            if( rFoot = true)
            {
@@ -81,7 +82,7 @@ public class Zombie extends Actor
            }
            
         } 
-        if (Greenfoot.isKeyDown("s"))
+        if (Greenfoot.isKeyDown("s") || Greenfoot.isKeyDown("down") )
         {
             if( rFoot == true && wTime % 15 == 0)
            {
@@ -92,7 +93,7 @@ public class Zombie extends Actor
             this.setImage("zombie_walk1.png");
             rFoot = true;
             }
-           move(-2);
+           move(-Speed.zSpeed);
         } 
         
            if (Greenfoot.isKeyDown("space")) // need stamina bar
@@ -156,10 +157,21 @@ public class Zombie extends Actor
            } 
            
        }
-
-    
         
-    
+       public void checkSpeed(){
+        if(Speed.zSpeed > 2){
+            if(wTime % 400 == 0){
+            Speed.zSpeed = 2;
+           }
+        }
+    }
+       
+       
+       
+       
+       
+       
+       
     public void checkWorld()
     {
         if(isAtEdge()){
