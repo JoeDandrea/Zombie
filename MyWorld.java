@@ -40,6 +40,10 @@ public class MyWorld extends World
         Zombie.lives = 3;
         Zombie.level = 1;
         
+        Stamina stamina = new Stamina();
+        addObject(stamina,900,40);
+        showText("Stamina",900,15);
+        
         Marine marine = new Marine();
         addObject(marine,randomX(),randomY());
         

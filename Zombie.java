@@ -122,9 +122,17 @@ public class Zombie extends Actor
         Greenfoot.playSound("slurp.wav");
         
         Life life = new Life(); //Extra Life Powerup
+        Speed speed = new Speed(); //Extra Life Powerup
         int x= (int) Math.ceil(Math.random()*100);
         if(x <= 15){
-         getWorld().addObject(life,MyWorld.randomX(),MyWorld.randomY());
+          int y= (int) Math.ceil(Math.random()*2);
+         if (y > 1){
+             getWorld().addObject(life,MyWorld.randomX(),MyWorld.randomY());
+            }
+            else{
+                getWorld().addObject(speed,MyWorld.randomX(),MyWorld.randomY());
+                   }
+         
          }
          
          
