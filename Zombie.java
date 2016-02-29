@@ -21,7 +21,8 @@ public class Zombie extends Actor
     boolean rFoot = true;
     boolean mFoot = true;
     
-    double wTime = 0;  // Walking animation timer
+    double wTime = 0;// Walking animation timer
+    int cooldown = 0;
     
     public Zombie()  //Initializes Zombie
     {
@@ -30,12 +31,13 @@ public class Zombie extends Actor
     
     public void act() 
     {
-        checkKeyPress();
         lookforMarines();
         lookforBoss();
         checkWorld();
         checkSpeed();
         wTime = wTime + 1;
+        checkKeyPress();
+        if(cooldown<=60){++cooldown;}
     }
     
     public void checkKeyPress() //Basic Movement  Falling?
@@ -96,9 +98,13 @@ public class Zombie extends Actor
            move(-Speed.zSpeed);
         } 
         
-           if (Greenfoot.isKeyDown("space")) // need stamina bar
+           if (Greenfoot.isKeyDown("space") && cooldown >=60) // need stamina bar
         {
-           move(6);
+          cooldown =0;
+          Zombie zombie = new Zombie();
+          getWorld().addObject(zombie,getX()+(int)(40*Math.cos(Math.toRadians(getRotation()))),getY()+(int)(40*Math.sin(Math.toRadians(getRotation()))));
+          zombie.setRotation(getRotation());
+          getWorld().removeObject(this);
         } 
         
     }
@@ -127,6 +133,7 @@ public class Zombie extends Actor
         getWorld().showText("Marines Eaten:" + marinesEaten,100,40); //Score
         getWorld().showText("Lives:" + lives,60,15);
         getWorld().showText("Level:" + level,140,15);
+        
        
         Actor player;
         player = getOneObjectAtOffset(0, 0, Player.class);
@@ -165,13 +172,7 @@ public class Zombie extends Actor
            }
         }
     }
-       
-       
-       
-       
-       
-       
-       
+      
     public void checkWorld()
     {
         if(isAtEdge()){
