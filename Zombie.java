@@ -37,8 +37,11 @@ public class Zombie extends User{
         lookforEnemies();
         checkSpeed();
         checkWorld();
-        remove();
         wTime++;
+        getWorld().showText("Marines Eaten:" + marinesEaten,100,40);
+        getWorld().showText("Lives:" + lives,60,15);
+        getWorld().showText("Level:" + level,150,15);
+        remove();
     }
     
     public void lookforEnemies(){
@@ -53,7 +56,7 @@ public class Zombie extends User{
             m.deleteMe = true;
             marinesEaten = marinesEaten + 1;
             Greenfoot.playSound("slurp.wav");
-            Life l = new Life((MyWorld)getWorld()); //Extra Life Powerup
+            Life l = new Life(); //Extra Life Powerup
             
         }
       }

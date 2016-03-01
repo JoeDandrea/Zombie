@@ -100,13 +100,11 @@ public class Fireball extends Projectiles
         if(zombie != null){
             int x = zombie.getX();
             int y = zombie.getY();
-            World world;
-            world = getWorld();
             //world.removeObject(zombie);
             ZombieGuts zg1 = new ZombieGuts();
-            world.addObject( zg1 ,x, y);
+            getWorld().addObject( zg1 ,x, y);
             
-            world.removeObject(zombie);
+            getWorld().removeObject(zombie);
         }
     }
 }
