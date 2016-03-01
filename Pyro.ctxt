@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Pyro
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Player\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=controls
+comment1.target=Pyro(int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ shoot()
+comment4.params=ss
+comment4.target=int\ setSpeed(int)
+comment5.params=
+comment5.target=void\ forwardMovement()
+comment6.params=
+comment6.target=void\ backwardsMovement()
+comment7.params=
+comment7.target=void\ shootAnimation()
+comment8.params=
+comment8.target=int\ playerRotation()
+comment9.params=
+comment9.target=void\ remove()
+numComments=10

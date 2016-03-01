@@ -6,20 +6,20 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Fzombie extends Actor
-{
+public class Fzombie extends AI{
+    
     int imgIndex = 1;
     long anTime = 0;
     String image = "fasto_move_000";
-    public void act() 
-    {
+    public boolean deleteMe = false;
+    
+    public void act(){
         move(2);
-        if(Greenfoot.getRandomNumber(200) < 10){
-            turn(Greenfoot.getRandomNumber(90) - 45);
-        }
+        randomTurn();
         zombieAnimate( image, 320 );
-        checkBounds();
+        checkWorld();
     }
+    
     public void zombieAnimate( String img, int delay ){
         if(imgIndex == 1 && anTime < System.currentTimeMillis() - delay){
             anTime = System.currentTimeMillis();
@@ -42,18 +42,11 @@ public class Fzombie extends Actor
             imgIndex = 1;
         }
     }
-    public void checkBounds(){
-        if(getX() >= getWorld().getWidth()-10){
-            turn(180);
-        }
-        else if(getY() >= getWorld().getHeight()-10){
-            turn(180);
-        }
-        else if(getY() < 1){
-            turn(180);
-        }
-        else if(getX() < 1){
-            turn(180);
+    
+    public void remove(){
+        if(deleteMe){
+            getWorld().addObject(new Dead() , this.getX() , this.getY());
+            getWorld().removeObject(this);
         }
     }
 }

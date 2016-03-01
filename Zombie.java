@@ -12,55 +12,98 @@ import java.util.Set;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Zombie extends Actor
-{
-    private int marinesEaten;
-    public static int lives = 3;
-    public static int level = 1;
+public class Zombie extends User{
     
-    boolean rFoot = true;
-    boolean mFoot = true;
+    private int     marinesEaten;
+    public  int     lives = 3;
+    public  int     level = 1;
+    private boolean rFoot = true;
+    private boolean mFoot = true;
+    private int     wTime = 0;  // Walking animation timer
+    private boolean visible = true;
     
-    double wTime = 0;// Walking animation timer
-    int cooldown = 0;
-    
-    public Zombie()  //Initializes Zombie
-    {
+    /**
+     * Constructs a Zombie. 
+     * @param The set of controls being used. 0 for 
+     * WASD. 1 for Arrow keys.
+     */
+    public Zombie(int controls){
+        super(controls);
         marinesEaten = 0;
     }
     
-    public void act() 
-    {
-        lookforMarines();
-        lookforBoss();
-        checkWorld();
-        checkSpeed();
-        wTime = wTime + 1;
+    public void act(){
         checkKeyPress();
-        if(cooldown<=60){++cooldown;}
+        lookforEnemies();
+        checkSpeed();
+        checkWorld();
+        remove();
+        wTime++;
     }
     
-    public void checkKeyPress() //Basic Movement  Falling?
-    {
-        if (Greenfoot.isKeyDown("a") || Greenfoot.isKeyDown("left"))
-        {
-            turn(-4);
-        }
-        if (Greenfoot.isKeyDown("d") || Greenfoot.isKeyDown("right"))
-        {
-            turn(4);
-        } 
-        
-        if (Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("up"))
-        {
-           if(wTime % 15 == 0 && mFoot == true)
-           {
-            this.setImage("zombie_walk3.png");
+    public void lookforEnemies(){
+        lookforMarines();
+        lookforPyro();
+        lookforBoss();
+    }
+    
+    public void lookforMarines(){//Remove Marines and add to score
+        Marine m = (Marine) getOneIntersectingObject(Marine.class);
+        if (m != null) {
+            m.deleteMe = true;
+            marinesEaten = marinesEaten + 1;
+            Greenfoot.playSound("slurp.wav");
+            Life l = new Life((MyWorld)getWorld()); //Extra Life Powerup
             
+        }
+      }
+      
+    public void lookforBoss(){
+        Fzombie fzombie = (Fzombie) getOneIntersectingObject(Fzombie.class);
+         if (fzombie != null) {       
+          removeTouching(Fzombie.class);
+           }
+       
+        Boss1 boss = (Boss1) getOneIntersectingObject(Boss1.class);
+        if (boss != null) {       
+          boss.deleteMe = true;
+          Greenfoot.playSound("slurp.wav");
+         }
+           
+       }
+       
+    public void lookforPyro(){
+           Pyro p = (Pyro)getOneObjectAtOffset(0, 0, Pyro.class);
+           if(p != null){
+               p.deleteMe = true;
+            }
+        }
+        
+       public void checkSpeed(){
+        if(Speed.zSpeed > 2){
+            if(wTime % 400 == 0){
+            Speed.zSpeed = 2;
+           }
+        }
+    }
+       
+     public void remove(){
+        if(lives <= 0){
+            getWorld().showText("Lives:" + 0,60,15);
+            Greenfoot.playSound("Pain.wav");
+            getWorld().addObject(new ZombieGuts() , getX(), getY());
+            getWorld().removeObject(this); 
+            Greenfoot.stop();
+        }
+    }
+    
+    public void forwardMovement(){
+        if(wTime % 15 == 0 && mFoot == true){
+            this.setImage("zombie_walk3.png");
             mFoot = false;
             if (rFoot == false){
                 rFoot = true;
-                }
+            }
             else if (rFoot == true){
                 rFoot = false;
             }
@@ -72,130 +115,25 @@ public class Zombie extends Actor
             else if (wTime % 15 == 0 && rFoot == false){
                 this.setImage("zombie_walk2.png");
                 mFoot = true;
-             }
-          move(Speed.zSpeed);
-        } 
-        
-        if (!Greenfoot.isKeyDown("w") && !Greenfoot.isKeyDown("s") && !Greenfoot.isKeyDown("up") && !Greenfoot.isKeyDown("down") )
-        {     
-           if( rFoot = true)
-           {
-            this.setImage("zombie_walk3.png");
-           }
-           
-        } 
-        if (Greenfoot.isKeyDown("s") || Greenfoot.isKeyDown("down") )
-        {
-            if( rFoot == true && wTime % 15 == 0)
-           {
-            this.setImage("zombie_walk2.png");
-            rFoot = false;
-           }
-           else if(wTime % 15 == 0){
-            this.setImage("zombie_walk1.png");
-            rFoot = true;
-            }
-           move(-Speed.zSpeed);
-        } 
-        
-           if (Greenfoot.isKeyDown("space") && cooldown >=60) // need stamina bar
-        {
-          cooldown =0;
-          Zombie zombie = new Zombie();
-          getWorld().addObject(zombie,getX()+(int)(40*Math.cos(Math.toRadians(getRotation()))),getY()+(int)(40*Math.sin(Math.toRadians(getRotation()))));
-          zombie.setRotation(getRotation());
-          getWorld().removeObject(this);
-        } 
-        
+        }
+        move(Speed.zSpeed);
     }
     
-    public void lookforMarines()  //Remove Marines and add to score
-    {
-        Marine marine = (Marine) getOneIntersectingObject(Marine.class);
-        ZMarine zmarine = new ZMarine();
-        Dead dead = new Dead();
-        if (marine != null) {       
-        removeTouching(Marine.class);
-        getWorld().addObject(zmarine,getX(),getY());
-        getWorld().addObject(dead,getX(),getY());
-        marinesEaten = marinesEaten + 1;
-        Greenfoot.playSound("slurp.wav");
-        
-        Life life = new Life(); //Extra Life Powerup
-        Speed speed = new Speed(); //Extra Life Powerup
-        int x= (int) Math.ceil(Math.random()*100);
-        if(x <= 15){
-          int y= (int) Math.ceil(Math.random()*2);
-         if (y > 1){
-             getWorld().addObject(life,MyWorld.randomX(),MyWorld.randomY());
-            }
-            else{
-                getWorld().addObject(speed,MyWorld.randomX(),MyWorld.randomY());
-                   }
-         
-         }
-         
-         
-        }
-        
-        getWorld().showText("Marines Eaten:" + marinesEaten,100,40); //Score
-        getWorld().showText("Lives:" + lives,60,15);
-        getWorld().showText("Level:" + level,140,15);
-        
-       
-        Actor player;
-        player = getOneObjectAtOffset(0, 0, Player.class);
-        if(player != null){
-            int x = player.getX();
-            int y = player.getY();
-          
-            //getWorld().removeObject(zombie);
-            //ZombieGuts zg1 = new ZombieGuts();
-            //getWorld().addObject( zg1 ,x, y);
-            
-            getWorld().removeObject(player);
-
-        
-       }
-      }
-      
-      public void lookforBoss() //Find and remove Bosses
-      {
-        Fzombie fzombie = (Fzombie) getOneIntersectingObject(Fzombie.class);
-         if (fzombie != null) {       
-          removeTouching(Fzombie.class);
-           }
-       
-        Boss1 boss = (Boss1) getOneIntersectingObject(Boss1.class);
-         if (boss != null) {       
-          removeTouching(Boss1.class);
-           } 
-           
-       }
-        
-       public void checkSpeed(){
-        if(Speed.zSpeed > 2){
-            if(wTime % 400 == 0){
-            Speed.zSpeed = 2;
-           }
+    public void stationaryAnimation(){
+        if( rFoot = true){
+            this.setImage("zombie_walk3.png");
         }
     }
-      
-    public void checkWorld()
-    {
-        if(isAtEdge()){
-           if(this.getX() >= getWorld().getWidth()-1){
-               this.setLocation( 0 , this.getY() );
-           }
-           else if(this.getX() <= 0 ){
-               this.setLocation( getWorld().getWidth() , this.getY());
-            }
-            if(this.getY() <= 0){
-               this.setLocation( this.getX() , getWorld().getHeight());
-           }
-           else if (this.getY() >= getWorld().getHeight()-1){
-               this.setLocation( this.getX() , 0 );
-            }
+    
+    public void backwardsMovement(){
+        if( rFoot == true && wTime % 15 == 0){
+            this.setImage("zombie_walk2.png");
+            rFoot = false;
         }
+        else if(wTime % 15 == 0){
+            this.setImage("zombie_walk1.png");
+            rFoot = true;
+        }
+        move(-Speed.zSpeed);
     }
 }

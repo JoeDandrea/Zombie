@@ -6,55 +6,46 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Bullet extends Actor
-{
+public class Bullet extends Projectiles{
+    
     private int direction, speed;
-    public Bullet(int dir)
-    {
+    
+    public Bullet(int dir){
         direction = dir;
         speed = 5;
     }
  
-    public void act()
-    {
+    public void act(){
         setRotation(direction);
-        move(speed);
-        removeBullet();
+        move(speed);           // move
+        remove();              // check if bullet has hit anything
     }
     
-      public void removeBullet()
-    {
-       boolean deleteMe = false;
-       Actor zombie = getOneIntersectingObject(Zombie.class);
-       Actor zmarine = getOneIntersectingObject(ZMarine.class);
-        if(isAtEdge())
-        {  
-         deleteMe = true; 
-       }
-      
-       if(zombie != null) 
-           {
-           --Zombie.lives;
-           deleteMe = true;
-           if(Zombie.lives <= 0){
-             getWorld().showText("Lives:" + 0,60,15);
-             Greenfoot.playSound("Pain.wav");
-             getWorld().removeObject(zombie); 
-             Greenfoot.stop();
-             }
-       }
-           
-        if(zmarine != null) 
-           {
-           getWorld().removeObject(zmarine); 
-           deleteMe = true;
-         }
-       
-       if (deleteMe == true){
-          getWorld().removeObject(this);
-        }
-  }
+    public void remove(){
+          boolean deleteMe = false;
+          Zombie z = (Zombie)getOneIntersectingObject(Zombie.class);
+          ZMarine zm = (ZMarine)getOneIntersectingObject(ZMarine.class);
+            // when bullet hits edge of map
+          if(isAtEdge()){  
+              deleteMe = true; 
+          }   
+              
+            // when a zombie gets shot
+          if(z != null){
+              --z.lives;
+              deleteMe = true;
+              //z = null;
+          }
+          
+          // when a ZMarine gets shot 
+          if(zm != null){
+              zm.deleteMe = true; 
+              deleteMe = true;
+              //zm = null;
+          }
+          
+          if (deleteMe == true){
+              getWorld().removeObject(this);
+          }
+    }
 }
-    
-
-

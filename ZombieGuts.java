@@ -6,22 +6,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class ZombieGuts extends Actor
-{
+public class ZombieGuts extends Markers {
+    
     String image = "splatter_1_000";
     int imgIndex = 1;
     long anTime = 0;
     long startTime = System.currentTimeMillis();
-    public void act() 
-    {
+    
+    public void act(){
         animateGore(image, 100);
-        long currTime = System.currentTimeMillis();
-        if(startTime < currTime - 700){
-        World world;
-        world = getWorld();
-        world.removeObject(this);
-        }
     }
+    
     public void animateGore(String img, int delay){
         if(imgIndex == 1 && anTime < System.currentTimeMillis() - delay){
             anTime = System.currentTimeMillis();
@@ -42,6 +37,9 @@ public class ZombieGuts extends Actor
             anTime = System.currentTimeMillis();
             this.setImage(img + imgIndex + ".png");
             imgIndex = 1;
+        }
+        if(startTime < System.currentTimeMillis() - 700){
+            getWorld().removeObject(this);
         }
     }
 }

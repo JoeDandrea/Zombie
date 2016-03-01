@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=AI
+comment0.text=\r\n\ Abstract\ class\ with\ basic\ movements.\r\n\ @author\ (Miles)\ \r\n\ @version\ (2-26-16)\r\n
+comment1.params=
+comment1.target=void\ act()
+comment2.params=
+comment2.target=void\ randomTurn()
+comment2.text=\r\n\ Execute\ a\ random\ turn.\r\n
+comment3.params=
+comment3.target=void\ checkWorld()
+comment3.text=\r\n\ Checks\ the\ surrondings.\ If\ the\ AI\ is\ at\r\n\ at\ the\ edge\ of\ the\ map\ turn\ away.\r\n
+comment4.params=
+comment4.target=void\ remove()
+comment4.text=\r\n\ What\ to\ do\ prior\ to\ removing\ this\ AI\r\n\ from\ the\ world.\r\n
+numComments=5

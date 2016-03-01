@@ -6,7 +6,7 @@ import java.lang.Math;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Fireball extends Actor
+public class Fireball extends Projectiles
 {
     long anTime = 0;
     int imgIndex = 1;

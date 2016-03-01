@@ -8,42 +8,37 @@ import java.awt.Color;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Marine extends Actor
-{
+public class Marine extends AI{
+    
+    public boolean deleteMe = false;
+    double time =0;
+    
     /**
      * Act - do whatever the Marine wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    double time =0;
-    public void act() 
-    {
+    public void act(){
         move(3);
-        turnAtEdge();
+        checkWorld();
         randomTurn();
-        
-        if (time % 60 ==0 )
-        {
+        shoot();
+        remove();
+    }  
+    
+    public void shoot(){
+        if (time % 60 ==0 ){
           getWorld().addObject(new Bullet(getRotation()),getX() ,getY() );    
         }
-        time = time + 1;
-    }    
-    
-    public void randomTurn()
-    {
-        if(Greenfoot.getRandomNumber(100)>90)
-        {
-            turn(Greenfoot.getRandomNumber(90)-45);
-        }
+        time++;
     }
     
-    
-    public void turnAtEdge()
-    {
-        if(isAtEdge())
-        {
-            turn(17);
+    public void remove(){
+         if(deleteMe){
+             ZMarine zm = new ZMarine();       
+             getWorld().addObject(zm , getX() , getY() );
+             Dead d = new Dead();
+             getWorld().addObject(d,getX(),getY());
+             getWorld().removeObject( this );
         }
     }
-    
-    
 }

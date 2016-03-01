@@ -7,39 +7,33 @@ import java.util.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Boss1 extends Actor{
+public class Boss1 extends AI{
+    
    double time =0;
-    public void act() 
-    {
+   public boolean deleteMe = false;
+   
+    public void act(){
         move(2);
-        turnAtEdge();
+        checkWorld();
         randomTurn();
-        
-        if (time % 60 ==0 )
-        {
+        shoot();
+        remove();
+    }
+    
+    public void shoot(){
+        if (time % 60 ==0 ){
           getWorld().addObject(new Bullet(getRotation()),getX() ,getY() );    
           getWorld().addObject(new Bullet(getRotation()+10),getX() ,getY() );    
           getWorld().addObject(new Bullet(getRotation()-10),getX() ,getY() );    
         }
-        time = time + 1;
-    }    
-    
-    public void randomTurn()
-    {
-        if(Greenfoot.getRandomNumber(100)>90)
-        {
-            turn(Greenfoot.getRandomNumber(90)-45);
-        }
+        time++;
     }
     
-    
-    public void turnAtEdge()
-    {
-        if(isAtEdge())
-        {
-            turn(17);
+    public void remove(){
+        if(deleteMe){
+            getWorld().addObject(new Dead() , this.getX() , this.getY());
+            getWorld().addObject(new Fzombie() , this.getX() , this.getY());
+            getWorld().removeObject(this);
         }
     }
-    
-    
 }

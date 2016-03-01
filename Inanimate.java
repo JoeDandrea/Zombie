@@ -1,15 +1,15 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Dead here.
+ * Write a description of class Inanimate here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Dead extends Markers
+public class Inanimate extends Actor
 {
     /**
-     * Act - do whatever the Dead wants to do. This method is called whenever
+     * Act - do whatever the Inanimate wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
