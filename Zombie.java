@@ -34,9 +34,9 @@ public class Zombie extends User{
     
     public void act(){
         checkKeyPress();
-        lookforEnemies();
         checkSpeed();
         checkWorld();
+        lookforEnemies();
         wTime++;
         getWorld().showText("Marines Eaten:" + marinesEaten,100,40);
         getWorld().showText("Lives:" + lives,60,15);
@@ -56,7 +56,20 @@ public class Zombie extends User{
             m.deleteMe = true;
             marinesEaten = marinesEaten + 1;
             Greenfoot.playSound("slurp.wav");
-            Life l = new Life(); //Extra Life Powerup
+            Life life = new Life();
+            Speed speed = new Speed();
+           int p = (int) Math.ceil(Math.random()*100);
+           if(p <= 30){
+               int c = (int) Math.ceil(Math.random()*100);
+                  if( c >= 50){
+                      getWorld().addObject( life , randomX() , randomY() );
+                   }
+                    
+                  if( c < 50){
+                      getWorld().addObject( speed , randomX() , randomY() );
+                   }
+        }
+          //  Life l = new Life(); //Extra Life Powerup
             
         }
       }
@@ -138,5 +151,16 @@ public class Zombie extends User{
             rFoot = true;
         }
         move(-Speed.zSpeed);
+    }
+    
+      public int randomX(){
+      return( 10 +  (int)(Math.random()*(getWorld().getWidth())));
+     
+   
+    }
+    
+    public int randomY(){
+      return( 10 +  (int)(Math.random()*(getWorld().getHeight())));
+         
     }
 }

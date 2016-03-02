@@ -22,6 +22,7 @@ public class ZMarine extends AI{
         checkWorld();
         randomTurn();
         lookforMarines(); 
+        remove();
     }    
     
     public void lookforMarines(){
@@ -33,8 +34,12 @@ public class ZMarine extends AI{
     }
     
      public void remove(){
-        getWorld().addObject(new Dead() , this.getX() , this.getY());
-        getWorld().removeObject(this);
+         if(deleteMe){
+           getWorld().addObject(new Dead() , this.getX() , this.getY());
+            getWorld().removeObject(this);
+            deleteMe = false;
+         }
+         
    }
     
 }

@@ -10,10 +10,7 @@ import java.util.Random;  // (World, Actor, GreenfootImage, Greenfoot and MouseI
 public class Life extends PowerUps{
     
     public Life(){
-        int x = (int) Math.ceil(Math.random()*100);
-        if(x <= 15){
-            getWorld().addObject( this , randomX() , randomY() );
-        }
+       
     } 
     
     public void act(){
@@ -26,12 +23,13 @@ public class Life extends PowerUps{
     
    public int randomX(){
    return( 10 +  (int)(Math.random()*(getWorld().getWidth())));
-  
+     
    
 }
     
     public int randomY(){
       return( 10 +  (int)(Math.random()*(getWorld().getHeight())));
+         
     }
     
     }
