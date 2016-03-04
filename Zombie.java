@@ -13,14 +13,13 @@ import java.util.Set;
  * @version (a version number or a date)
  */
 public class Zombie extends User{
-    
-    private int     marinesEaten;
-    public  int     lives = 3;
-    public  int     level = 1;
-    private boolean rFoot = true;
-    private boolean mFoot = true;
-    private int     wTime = 0;  // Walking animation timer
-    private boolean visible = true;
+ 
+    public static int marinesEaten = 0;
+    public Bar hpBar , spBar;
+    private boolean rFoot = true , mFoot = true;
+    private int     wTime = 0 , sTimer =0;
+    final static int DEFAULT_SPEED = 2;
+    public static int zSpeed = DEFAULT_SPEED;
     
     /**
      * Constructs a Zombie. 
@@ -29,18 +28,16 @@ public class Zombie extends User{
      */
     public Zombie(int controls){
         super(controls);
-        marinesEaten = 0;
+        hpBar = new Bar("Zombie","Points", 100, 100);
     }
     
     public void act(){
+        getWorld().addObject(hpBar , 30 , 30);
         checkKeyPress();
+        lookforEnemies();
         checkSpeed();
         checkWorld();
-        lookforEnemies();
         wTime++;
-        getWorld().showText("Marines Eaten:" + marinesEaten,100,40);
-        getWorld().showText("Lives:" + lives,60,15);
-        getWorld().showText("Level:" + level,150,15);
         remove();
     }
     
@@ -54,32 +51,12 @@ public class Zombie extends User{
         Marine m = (Marine) getOneIntersectingObject(Marine.class);
         if (m != null) {
             m.deleteMe = true;
-            marinesEaten = marinesEaten + 1;
+            marinesEaten++;
             Greenfoot.playSound("slurp.wav");
-            Life life = new Life();
-            Speed speed = new Speed();
-           int p = (int) Math.ceil(Math.random()*100);
-           if(p <= 30){
-               int c = (int) Math.ceil(Math.random()*100);
-                  if( c >= 50){
-                      getWorld().addObject( life , randomX() , randomY() );
-                   }
-                    
-                  if( c < 50){
-                      getWorld().addObject( speed , randomX() , randomY() );
-                   }
-        }
-          //  Life l = new Life(); //Extra Life Powerup
-            
         }
       }
       
     public void lookforBoss(){
-        Fzombie fzombie = (Fzombie) getOneIntersectingObject(Fzombie.class);
-         if (fzombie != null) {       
-          removeTouching(Fzombie.class);
-           }
-       
         Boss1 boss = (Boss1) getOneIntersectingObject(Boss1.class);
         if (boss != null) {       
           boss.deleteMe = true;
@@ -96,20 +73,19 @@ public class Zombie extends User{
         }
         
        public void checkSpeed(){
-        if(Speed.zSpeed > 2){
-            if(wTime % 400 == 0){
-            Speed.zSpeed = 2;
-           }
+        if(zSpeed > DEFAULT_SPEED &&  sTimer ==0){
+            zSpeed = DEFAULT_SPEED;
         }
     }
        
      public void remove(){
-        if(lives <= 0){
-            getWorld().showText("Lives:" + 0,60,15);
-            Greenfoot.playSound("Pain.wav");
-            getWorld().addObject(new ZombieGuts() , getX(), getY());
-            getWorld().removeObject(this); 
-            Greenfoot.stop();
+        if(getWorld() instanceof MyWorld){
+            if(hpBar.getValue() == hpBar.getMinimumValue()){
+                Greenfoot.playSound("Pain.wav");
+                getWorld().removeObject(this);
+                Greenfoot.setWorld(new LoseScreen(((MyWorld)getWorld()).level , marinesEaten));
+                marinesEaten = 0;
+            }
         }
     }
     
@@ -132,7 +108,7 @@ public class Zombie extends User{
                 this.setImage("zombie_walk2.png");
                 mFoot = true;
         }
-        move(Speed.zSpeed);
+        move(zSpeed);
     }
     
     public void stationaryAnimation(){
@@ -150,17 +126,6 @@ public class Zombie extends User{
             this.setImage("zombie_walk1.png");
             rFoot = true;
         }
-        move(-Speed.zSpeed);
-    }
-    
-      public int randomX(){
-      return( 10 +  (int)(Math.random()*(getWorld().getWidth())));
-     
-   
-    }
-    
-    public int randomY(){
-      return( 10 +  (int)(Math.random()*(getWorld().getHeight())));
-         
+        move(-zSpeed);
     }
 }

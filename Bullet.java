@@ -32,16 +32,14 @@ public class Bullet extends Projectiles{
               
             // when a zombie gets shot
           if(z != null){
-              --z.lives;
+              z.hpBar.subtract(20);
               deleteMe = true;
-              //z = null;
           }
           
           // when a ZMarine gets shot 
           if(zm != null){
               zm.deleteMe = true; 
               deleteMe = true;
-              //zm = null;
           }
           
           if (deleteMe == true){

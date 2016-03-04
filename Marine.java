@@ -41,6 +41,4 @@ public class Marine extends AI{
              getWorld().removeObject( this );
         }
     }
-    
-    
 }

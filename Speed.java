@@ -12,14 +12,13 @@ public class Speed extends PowerUps
      * Act - do whatever the speed wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    public static int zSpeed = 2;
     long startTime;
     public void act()
     {
-       Actor zombie = getOneIntersectingObject(Zombie.class);
+       Zombie zombie = (Zombie) getOneIntersectingObject(Zombie.class);
        if(zombie != null) 
            {
-            zSpeed += 5;
+            zombie.zSpeed += 5;
             getWorld().removeObject(this);
         }          
   }

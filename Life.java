@@ -9,27 +9,12 @@ import java.util.Random;  // (World, Actor, GreenfootImage, Greenfoot and MouseI
  */
 public class Life extends PowerUps{
     
-    public Life(){
-       
-    } 
-    
     public void act(){
-        Zombie z = (Zombie)getOneIntersectingObject(Zombie.class);
-        if(z != null){
-            ++z.lives;
-            getWorld().removeObject(this);
-        }      
+        super.remove();
     }
     
-   public int randomX(){
-   return( 10 +  (int)(Math.random()*(getWorld().getWidth())));
-     
-   
+   public void pUp(Zombie z){
+       z.hpBar.add(10);
+    }
+    
 }
-    
-    public int randomY(){
-      return( 10 +  (int)(Math.random()*(getWorld().getHeight())));
-         
-    }
-    
-    }
