@@ -32,8 +32,8 @@ public class Zombie extends User{
     }
     
     public void act(){
-        getWorld().addObject(hpBar , 50 , 50);// update hpbar
-        getWorld().addObject(spBar , 50 , 60);// update spBar
+        getWorld().addObject(hpBar , 300 , 10);// update hpbar
+        getWorld().addObject(spBar , 300 , 35);// update spBar
         checkKeyPress(); // check for movement
         lookforEnemies();// check for kills
         checkSpeed(); // check if speed boost has worn off

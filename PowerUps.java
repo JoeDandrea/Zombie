@@ -10,7 +10,7 @@ public class PowerUps extends Inanimate{
     
     public void remove(){
         Zombie z = (Zombie)getOneIntersectingObject(Zombie.class);
-        if(z != null  && Greenfoot.isKeyDown("p")){
+        if(z != null  && Greenfoot.isKeyDown("e")){
             pUp(z);
             getWorld().removeObject(this);
         }      

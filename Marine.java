@@ -34,11 +34,15 @@ public class Marine extends AI{
     
     public void remove(){
          if(deleteMe){
+             Life life = new Life();
+             drop(life,25);
+             Speed speed = new Speed();
+             drop(speed,25);
              ZMarine zm = new ZMarine();       
              getWorld().addObject(zm , getX() , getY() );
              Dead d = new Dead();
              getWorld().addObject(d,getX(),getY());
              getWorld().removeObject( this );
-        }
+             }
     }
 }
