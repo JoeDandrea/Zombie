@@ -16,9 +16,11 @@ public class Bullet extends Projectiles{
     }
  
     public void act(){
-        setRotation(direction);
-        move(speed);           // move
-        remove();              // check if bullet has hit anything
+        if(getWorld()!= null){
+            setRotation(direction);
+            move(speed);           // move
+            remove();              // check if bullet has hit anything
+        }
     }
     
     public void remove(){

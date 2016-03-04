@@ -48,9 +48,8 @@ public class User extends Animate{
         } 
         
         if (Greenfoot.isKeyDown("space")){ // add stamina bar
-           move(6);
+           spaceMovement();
         } 
-        
     }
     
     /** User Defined */
@@ -62,6 +61,13 @@ public class User extends Animate{
     /** User Defined */
     public void backwardsMovement(){}
     
+    /** User Defined */
+    public void spaceMovement(){}
+    
+    /**
+     * If this object is at the edge of the map repawn 
+     * at the exact opposite of the map.
+     */
     public void checkWorld(){
         if(isAtEdge()){
            if(this.getX() >= getWorld().getWidth()-1){

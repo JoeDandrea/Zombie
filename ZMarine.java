@@ -21,20 +21,21 @@ public class ZMarine extends AI{
         move(1);
         checkWorld();
         randomTurn();
-        lookforMarines(); 
+        lookforMarines();
+        remove();
     }    
     
     public void lookforMarines(){
         Marine m = (Marine) getOneIntersectingObject(Marine.class);
         if (m != null) {       
-        m.deleteMe = true;
-        Greenfoot.playSound("slurp.wav"); //https://freesound.org/people/Sirderf/sounds/333132/
+            m.deleteMe = true;
+            Greenfoot.playSound("slurp.wav"); //https://freesound.org/people/Sirderf/sounds/333132/
         }
     }
     
-     public void remove(){
-        getWorld().addObject(new Dead() , this.getX() , this.getY());
-        getWorld().removeObject(this);
-   }
-    
-}
+    public void remove(){
+        if(deleteMe){
+            getWorld().removeObject(this);
+        }
+    }
+}   

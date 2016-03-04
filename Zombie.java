@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 
-
-
 /**
  * Write a description of class Zombie here.
  * 
@@ -17,7 +15,7 @@ public class Zombie extends User{
     public static int marinesEaten = 0;
     public Bar hpBar , spBar;
     private boolean rFoot = true , mFoot = true;
-    private int     wTime = 0 , sTimer =0;
+    public int wTime , sTimer ; // walking timer / speed boost timer
     final static int DEFAULT_SPEED = 2;
     public static int zSpeed = DEFAULT_SPEED;
     
@@ -28,54 +26,48 @@ public class Zombie extends User{
      */
     public Zombie(int controls){
         super(controls);
-        hpBar = new Bar("Zombie","Points", 100, 100);
+        hpBar = new Bar("Zombie","Health", 100, 100);
+        spBar = new Bar("Zombie","Stamina", 100, 100);
+        marinesEaten = 0;
     }
     
     public void act(){
-        getWorld().addObject(hpBar , 30 , 30);
-        checkKeyPress();
-        lookforEnemies();
-        checkSpeed();
-        checkWorld();
-        wTime++;
-        remove();
+        getWorld().addObject(hpBar , 50 , 50);// update hpbar
+        getWorld().addObject(spBar , 50 , 60);// update spBar
+        checkKeyPress(); // check for movement
+        lookforEnemies();// check for kills
+        checkSpeed(); // check if speed boost has worn off
+        checkWorld(); // when on the edge of the world
+        wTime++; // increment walking timer
+        spBar.add(1); // increase stamina bar
+        remove(); // check if the zombie is dead
     }
     
-    public void lookforEnemies(){
-        lookforMarines();
-        lookforPyro();
-        lookforBoss();
-    }
-    
-    public void lookforMarines(){//Remove Marines and add to score
+    public void lookforEnemies(){//Remove Marines and add to score
         Marine m = (Marine) getOneIntersectingObject(Marine.class);
         if (m != null) {
             m.deleteMe = true;
             marinesEaten++;
             Greenfoot.playSound("slurp.wav");
         }
-      }
-      
-    public void lookforBoss(){
+        
         Boss1 boss = (Boss1) getOneIntersectingObject(Boss1.class);
         if (boss != null) {       
           boss.deleteMe = true;
           Greenfoot.playSound("slurp.wav");
          }
-           
-       }
-       
-    public void lookforPyro(){
-           Pyro p = (Pyro)getOneObjectAtOffset(0, 0, Pyro.class);
+         
+         Pyro p = (Pyro)getOneObjectAtOffset(0, 0, Pyro.class);
            if(p != null){
                p.deleteMe = true;
             }
-        }
-        
-       public void checkSpeed(){
-        if(zSpeed > DEFAULT_SPEED &&  sTimer ==0){
+      }
+      
+    public void checkSpeed(){
+        if(zSpeed > DEFAULT_SPEED &&  sTimer == 0){
             zSpeed = DEFAULT_SPEED;
         }
+        sTimer--;
     }
        
      public void remove(){
@@ -89,24 +81,34 @@ public class Zombie extends User{
         }
     }
     
+    public void spaceMovement(){
+        if(spBar.getValue() == spBar.getMaximumValue()){
+            move(10);
+            move(10);move(10);move(10);move(10);
+            spBar.subtract(spBar.getMaximumValue());
+        }
+    }
+    
     public void forwardMovement(){
-        if(wTime % 15 == 0 && mFoot == true){
-            this.setImage("zombie_walk3.png");
-            mFoot = false;
-            if (rFoot == false){
-                rFoot = true;
+        if(wTime % 15 == 0){
+            if(mFoot == true){
+                this.setImage("zombie_walk3.png");
+                mFoot = false;
+                if (rFoot == false){
+                    rFoot = true;
+                }
+                else if (rFoot == true){
+                    rFoot = false;
+                }
             }
             else if (rFoot == true){
-                rFoot = false;
+                this.setImage("zombie_walk1.png");
+                mFoot = true;
             }
-           }
-            else if (wTime % 15 == 0 && rFoot == true){
-            this.setImage("zombie_walk1.png");
-            mFoot = true;
-            }
-            else if (wTime % 15 == 0 && rFoot == false){
+            else if (rFoot == false){
                 this.setImage("zombie_walk2.png");
                 mFoot = true;
+            }
         }
         move(zSpeed);
     }
